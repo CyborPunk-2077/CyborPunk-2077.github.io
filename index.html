@@ -1,177 +1,38 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#f1efe8" />
-  <meta name="description" content="Abhishek Tiwary — software engineer building applied AI, automation, developer tooling and product systems." />
-  <title>Abhishek Tiwary — Systems / Applied AI</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111111'/%3E%3Cpath d='M10 46 25 12h8l15 34h-9l-3-8H21l-3 8Zm14-16h9l-4.5-12Z' fill='%23f1efe8'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="/styles1.css">
-  <link rel="stylesheet" href="/styles2.css">
-  <link rel="stylesheet" href="/styles3.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Abhishek Tiwary — BLACKSITE</title>
+<style>
+html,body{margin:0;background:#05070a;color:#e7f3f1;font-family:ui-monospace,monospace}
+#boot{min-height:100vh;display:grid;place-items:center;letter-spacing:.12em;text-transform:uppercase}
+</style>
 </head>
-<body data-route="home">
-  <div id="noise" aria-hidden="true"></div>
-  <div id="pointer" aria-hidden="true"><span></span></div>
-  <div id="preview" aria-hidden="true"><img alt="" /></div>
-
-  <header class="topbar" id="topbar">
-    <a class="brand route-link" href="#home" data-route-link="home" aria-label="Home">
-      <span class="brand-mark">AT</span><span class="brand-sub">BENGALURU / 2026</span>
-    </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="#work" data-scroll="work">WORK</a>
-      <button type="button" data-quick>QUICK VIEW</button>
-      <a href="#contact" data-scroll="contact">CONTACT</a>
-      <button type="button" data-command aria-label="Open command palette">⌘K</button>
-    </nav>
-  </header>
-
-  <main id="homeRoute" class="route route-home" data-route-view="home">
-    <section class="hero" id="top">
-      <div class="hero-ruler ruler-top" aria-hidden="true"><span>00</span><span>INTERACTIVE EDITION</span><span>26</span></div>
-      <div class="hero-copy">
-        <p class="eyebrow">SOFTWARE ENGINEER · APPLIED AI · AUTOMATION</p>
-        <h1 class="hero-title" aria-label="I build systems that make work move">
-          <span class="hero-line line-a">I BUILD</span>
-          <span class="hero-line line-b"><em>SYSTEMS</em> THAT</span>
-          <span class="hero-line line-c">MAKE WORK <b>MOVE.</b></span>
-        </h1>
-        <div class="hero-caption">
-          <span>NOT A STACK OF FRAMEWORKS.</span>
-          <span>A SET OF WORKING IDEAS.</span>
-        </div>
-      </div>
-
-      <div class="hero-media" id="heroMedia" aria-label="Selected project media">
-        <button class="media-card media-a" data-open-project="revenueos" aria-label="Open RevenueOS">
-          <img src="https://abhishek-project-demos1.vercel.app/posters/revenueos.jpg" alt="RevenueOS interface" />
-          <span><b>01</b> REVENUEOS</span>
-        </button>
-        <button class="media-card media-b" data-open-project="viberant" aria-label="Open Viberant">
-          <img src="https://abhishek-project-demos1.vercel.app/posters/viberant.jpg" alt="Viberant interface" />
-          <span><b>02</b> VIBERANT</span>
-        </button>
-        <button class="media-card media-c" data-open-project="receptionflow" aria-label="Open ReceptionFlow">
-          <img src="https://abhishek-project-demos1.vercel.app/posters/receptionflow.jpg" alt="ReceptionFlow interface" />
-          <span><b>03</b> RECEPTIONFLOW</span>
-        </button>
-      </div>
-
-      <button class="hero-index-jump" data-scroll="work" type="button">
-        <span>ENTER THE INDEX</span><i>↓</i>
-      </button>
-    </section>
-
-    <section class="work-index" id="work">
-      <header class="section-head">
-        <span>SELECTED WORK / 06</span>
-        <h2>PROJECTS AS<br><em>DIFFERENT MACHINES.</em></h2>
-        <p>Move across the index. Every project changes the page before it opens.</p>
-      </header>
-
-      <div class="project-list" role="list">
-        <button class="project-row" role="listitem" data-open-project="revenueos" data-project="revenueos">
-          <span class="row-no">01</span><span class="row-name">RevenueOS</span><span class="row-domain">REVENUE OPERATIONS / CRM AUTOMATION</span><span class="row-status">HARDENING / NOT GA</span><span class="row-arrow">↗</span>
-        </button>
-        <button class="project-row" role="listitem" data-open-project="viberant" data-project="viberant">
-          <span class="row-no">02</span><span class="row-name">Viberant</span><span class="row-domain">LOCAL-FIRST DEVELOPER WORKSPACE</span><span class="row-status">BUILT</span><span class="row-arrow">↗</span>
-        </button>
-        <button class="project-row" role="listitem" data-open-project="receptionflow" data-project="receptionflow">
-          <span class="row-no">03</span><span class="row-name">ReceptionFlow</span><span class="row-domain">AI VOICE RECEPTIONIST</span><span class="row-status">PROTOTYPE</span><span class="row-arrow">↗</span>
-        </button>
-        <button class="project-row" role="listitem" data-open-project="forgeos" data-project="forgeos">
-          <span class="row-no">04</span><span class="row-name">ForgeOS</span><span class="row-domain">ENGINEERING PLATFORM ARCHITECTURE</span><span class="row-status">ARCHITECTURE</span><span class="row-arrow">↗</span>
-        </button>
-        <button class="project-row" role="listitem" data-open-project="visionance" data-project="visionance">
-          <span class="row-no">05</span><span class="row-name">Visionance</span><span class="row-domain">GPU VIDEO ENHANCEMENT</span><span class="row-status">DESKTOP / GPU</span><span class="row-arrow">↗</span>
-        </button>
-        <button class="project-row" role="listitem" data-open-project="visionextract" data-project="visionextract">
-          <span class="row-no">06</span><span class="row-name">VisionExtract</span><span class="row-domain">ARTICLE IMAGE EXTRACTION PIPELINE</span><span class="row-status">BUILT</span><span class="row-arrow">↗</span>
-        </button>
-      </div>
-    </section>
-
-    <section class="statement-section">
-      <div class="statement-track" aria-hidden="true">AUTOMATE / CONNECT / LISTEN / SEE / BUILD / SHIP /</div>
-      <div class="statement-grid">
-        <p class="statement-kicker">A WORKING PRINCIPLE</p>
-        <blockquote>THE BEST SOFTWARE<br>REMOVES <em>REPETITION</em><br>WITHOUT REMOVING CONTROL.</blockquote>
-        <div class="statement-note">I build around the work between the obvious screens: handoffs, follow-up, context, integration, automation and failure states.</div>
-      </div>
-    </section>
-
-    <section class="capabilities" id="capabilities">
-      <header class="section-head compact">
-        <span>CAPABILITY FIELD</span><h2>WHAT THE SOFTWARE<br>IS ASKED TO DO.</h2>
-      </header>
-      <div class="capability-field" id="capabilityField">
-        <button data-cap="AUTOMATE" data-related="RevenueOS / ReceptionFlow">AUTOMATE</button>
-        <button data-cap="CONNECT" data-related="Viberant / RevenueOS">CONNECT</button>
-        <button data-cap="LISTEN" data-related="ReceptionFlow">LISTEN</button>
-        <button data-cap="SEE" data-related="Visionance / VisionExtract">SEE</button>
-        <button data-cap="ORCHESTRATE" data-related="RevenueOS / ForgeOS">ORCHESTRATE</button>
-        <button data-cap="SHIP" data-related="Viberant / ForgeOS">SHIP</button>
-      </div>
-      <div class="capability-readout" id="capabilityReadout"><span>MOVE ACROSS A WORD</span><b>RELATED WORK RECOMPOSES HERE.</b></div>
-    </section>
-
-    <section class="archive" id="archive">
-      <header class="archive-header"><span>FULL WORK INDEX</span><b>24 PUBLIC / EXPERIMENTAL BUILDS</b></header>
-      <div class="archive-toolbar" role="group" aria-label="Archive filters">
-        <button class="is-active" data-filter="all">ALL</button><button data-filter="systems">SYSTEMS</button><button data-filter="ai">AI / ML</button><button data-filter="tools">TOOLS</button><button data-filter="experiments">EXPERIMENTS</button>
-      </div>
-      <div class="archive-list" id="archiveList"></div>
-    </section>
-
-    <section class="profile" id="profile">
-      <div class="profile-title"><span>PROFILE / 2026</span><h2>YOU CAN<br><em>JUST READ IT.</em></h2></div>
-      <div class="profile-copy">
-        <p>Software engineer building applied AI, automation and developer tooling across revenue workflows, real-time voice systems, local-first tools and data pipelines.</p>
-        <dl>
-          <div><dt>EDUCATION</dt><dd>B.E. Artificial Intelligence & Machine Learning<br>Ramaiah Institute of Technology · 2022–2026</dd></div>
-          <div><dt>LANGUAGES</dt><dd>Python · JavaScript · TypeScript · C++ · C</dd></div>
-          <div><dt>BACKEND</dt><dd>Node.js · Express · Flask · REST · WebSockets</dd></div>
-          <div><dt>FRONTEND / APP</dt><dd>React · HTML · CSS · SCSS · Electron</dd></div>
-          <div><dt>DATA / DEVOPS</dt><dd>MongoDB · SQL · AWS · Docker · GitHub Actions · Vercel</dd></div>
-        </dl>
-        <div class="profile-links"><a href="/resume.html" target="_blank">RESUME ↗</a><a href="https://github.com/CyborPunk-2077" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/abhishek-t-b32078114" target="_blank" rel="noreferrer">LINKEDIN ↗</a></div>
-      </div>
-    </section>
-
-    <section class="contact" id="contact">
-      <p>AVAILABLE FOR SOFTWARE ENGINEERING / APPLIED AI / AUTOMATION / PRODUCT BUILDS</p>
-      <a class="contact-main" href="mailto:abhishektiwary2077@gmail.com"><span>START A</span><em>CONVERSATION</em><i>↗</i></a>
-      <footer><span>ABHISHEK TIWARY</span><span>BENGALURU, INDIA</span><span>2026</span></footer>
-    </section>
-  </main>
-
-  <main id="projectRoute" class="route route-project" data-route-view="project" hidden></main>
-
-  <aside id="transitionStage" class="transition-stage" aria-hidden="true">
-    <div class="transition-word"></div>
-    <div class="transition-strips"></div>
-    <div class="transition-rule"></div>
-  </aside>
-
-  <dialog id="quickDialog" class="quick-dialog">
-    <button class="quick-close" data-close-quick aria-label="Close quick view">×</button>
-    <div class="quick-grid">
-      <div><span>ABHISHEK TIWARY</span><h2>SOFTWARE ENGINEER<br>APPLIED AI & AUTOMATION</h2><p>Bengaluru, India</p></div>
-      <div><b>FLAGSHIP</b><p>RevenueOS<br>Viberant<br>ReceptionFlow<br>VisionExtract</p></div>
-      <div><b>FOCUS</b><p>Automation<br>Internal tools<br>Voice systems<br>Developer tooling<br>Data pipelines</p></div>
-      <div class="quick-actions"><a href="/resume.html" target="_blank">RESUME ↗</a><a href="mailto:abhishektiwary2077@gmail.com">EMAIL ↗</a></div>
-    </div>
-  </dialog>
-
-  <dialog id="commandDialog" class="command-dialog">
-    <label for="commandInput">GO ANYWHERE</label>
-    <input id="commandInput" autocomplete="off" placeholder="Type a project or section…" />
-    <div id="commandResults"></div>
-  </dialog>
-
-  <script src="/script1.js"></script>
-  <script src="/script2.js"></script>
-</body>
-</html>
+<body><div id="boot">Loading BLACKSITE…</div>
+<script>
+(async()=>{
+ try{
+   const names=['00','01','02','03','04','05','06'];
+   const parts=[];
+   for(const n of names){
+     const r=await fetch(`payload/site-${n}.txt`,{cache:'no-store'});
+     if(!r.ok) throw new Error(`payload ${n}: ${r.status}`);
+     parts.push((await r.text()).trim());
+   }
+   const b64=parts.join('');
+   const bin=atob(b64);
+   const bytes=new Uint8Array(bin.length);
+   for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+   const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+   const html=await new Response(stream).text();
+   document.open();
+   document.write(html);
+   document.close();
+ }catch(e){
+   document.getElementById('boot').textContent='BLACKSITE failed to load — refresh';
+   console.error(e);
+ }
+})();
+</script>
+</body></html>
