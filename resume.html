@@ -2,27 +2,39 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Abhishek Tiwary — Resume</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#11110f">
+<title>Abhishek Tiwary — Software Engineer · Applied AI / Automation</title>
 <style>
-html,body{margin:0;background:#05070a;color:#e7f3f1;font-family:system-ui,sans-serif}
-main{min-height:100vh;display:grid;place-items:center;text-align:center;padding:24px}
-small{opacity:.7}
+:root{--bg:#11110f;--paper:#f3f0e7;--ink:#151513;--muted:#706d65;--line:#d6d0c3;--accent:#e9561f;--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;--sans:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}
+.toolbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px max(16px,calc((100vw - 1040px)/2));background:rgba(17,17,15,.94);backdrop-filter:blur(14px);border-bottom:1px solid #33322e}.toolbar a,.toolbar button{appearance:none;border:1px solid #4c4a43;background:transparent;color:#eee9df;text-decoration:none;padding:9px 12px;font:700 10px var(--mono);letter-spacing:.09em;text-transform:uppercase;cursor:pointer}.toolbar a:hover,.toolbar button:hover{border-color:var(--accent);color:#ff7943}
+.page{width:min(1040px,calc(100% - 32px));margin:28px auto 52px;background:var(--paper);padding:48px 52px 40px;box-shadow:0 24px 80px rgba(0,0,0,.35)}
+header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:end;padding-bottom:20px;border-bottom:2px solid var(--ink)}h1{font-size:37px;line-height:.95;margin:0 0 9px;letter-spacing:-.04em}.role{font:800 12px var(--mono);letter-spacing:.1em;color:var(--accent)}.contact{text-align:right;font:600 10.5px/1.75 var(--mono);color:#4e4b45}.contact a{color:inherit;text-decoration:none;border-bottom:1px solid #aaa398}.contact a:hover{color:var(--accent);border-color:var(--accent)}
+.section{display:grid;grid-template-columns:145px minmax(0,1fr);gap:26px;padding:23px 0;border-bottom:1px solid var(--line)}.section:last-child{border-bottom:0;padding-bottom:0}.label{font:800 10.5px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:#22211e}.profile{margin:0;font-size:12.6px;line-height:1.63;color:#36342f}
+.projects-head{display:flex;justify-content:flex-end;margin:-3px 0 16px;font:700 9.5px var(--mono);letter-spacing:.08em;color:#767269}.project{display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px;padding:0 0 18px;margin-bottom:18px;border-bottom:1px solid #ddd7ca}.project:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}.no{font:900 12px var(--mono);color:var(--accent);padding-top:3px}.project-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:start}.project h2{font-size:15.7px;line-height:1.25;margin:0 0 5px;letter-spacing:-.012em}.date{font:700 9.5px var(--mono);color:#706c64;white-space:nowrap;padding-top:3px}.meta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;margin-bottom:8px;font:600 9.7px/1.4 var(--mono);color:#726e65}.meta-links{white-space:nowrap}.meta a{color:var(--accent);text-decoration:none}.project ul{margin:0;padding-left:17px}.project li{font-size:11.2px;line-height:1.5;margin:5px 0;color:#302f2a}
+.dual{display:grid;grid-template-columns:.92fr 1.28fr;gap:34px}.block strong{display:block;font-size:12.5px;line-height:1.35;margin-bottom:5px}.block .minor{font:600 10px/1.5 var(--mono);color:#6a675f}.block p{font-size:10.8px;line-height:1.55;margin:5px 0 0;color:#3b3933}
+.skills-head{display:flex;justify-content:space-between;gap:14px;margin-bottom:13px}.skills-head span:last-child{font:700 9px var(--mono);letter-spacing:.07em;color:#78736a}.skills{display:grid;grid-template-columns:115px minmax(0,1fr) 115px minmax(0,1fr);column-gap:12px;row-gap:8px}.skills b{font:800 9px var(--mono);letter-spacing:.06em;color:#5c5850}.skills span{font-size:10.6px;line-height:1.45;color:#37352f}
+@media(max-width:760px){.page{width:100%;margin:0;padding:30px 20px;box-shadow:none}.toolbar{position:relative;padding:9px 10px}header{grid-template-columns:1fr}.contact{text-align:left}.section{grid-template-columns:1fr;gap:12px}.project-top,.meta{grid-template-columns:1fr}.date{padding-top:0}.dual{grid-template-columns:1fr}.skills{grid-template-columns:108px 1fr}.skills-head span:last-child{display:none}}
+@media print{@page{size:A4;margin:0}html,body{background:#fff}.toolbar{display:none}.page{width:210mm;min-height:297mm;margin:0;padding:10.5mm 12mm 9mm;box-shadow:none}.section{padding:14px 0}.project{padding-bottom:11px;margin-bottom:11px}h1{font-size:30px}.profile{font-size:10.8px}.project h2{font-size:13.2px}.project li{font-size:9.5px}.block p,.skills span{font-size:9px}}
 </style>
 </head>
-<body><main><div><p>Loading resume…</p><small>Abhishek Tiwary</small></div></main>
-<script>
-(async()=>{
- try{
-   const b64=(await fetch('payload/resume.b64',{cache:'no-store'}).then(r=>r.text())).trim();
-   const bin=atob(b64), bytes=new Uint8Array(bin.length);
-   for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-   const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
-   location.replace(url);
- }catch(e){
-   document.querySelector('p').textContent='Resume failed to load. Please retry.';
-   console.error(e);
- }
-})();
-</script>
-</body></html>
+<body>
+<nav class="toolbar"><a href="./">← Back to BLACKSITE</a><button type="button" onclick="window.print()">Print / Save PDF</button></nav>
+<main class="page">
+<header>
+  <div><h1>ABHISHEK TIWARY</h1><div class="role">SOFTWARE ENGINEER · APPLIED AI / AUTOMATION</div></div>
+  <div class="contact">Bengaluru, India · +91 8340336634<br><a href="mailto:abhishektiwary2077@gmail.com">abhishektiwary2077@gmail.com</a><br><a href="https://www.linkedin.com/in/abhishek-t-b32078114" target="_blank" rel="noreferrer">LinkedIn</a> · <a href="https://github.com/CyborPunk-2077" target="_blank" rel="noreferrer">GitHub</a> · <a href="./">Portfolio</a> · <a href="https://abhishek-project-demos1.vercel.app/" target="_blank" rel="noreferrer">Demos</a></div>
+</header>
+<section class="section"><div class="label">Profile</div><p class="profile">Software engineer building applied AI, automation, and developer tooling across revenue workflows, real-time voice systems, local-first development tools, and data pipelines. Focused on reliable integrations, testable workflows, clear system boundaries, and software that can move from prototype toward deployable product.</p></section>
+<section class="section"><div class="label">Selected Projects</div><div><div class="projects-head">04 BUILDS · DEMOS · SOURCE</div>
+<article class="project"><div class="no">01</div><div><div class="project-top"><h2>RevenueOS — Revenue Operations &amp; CRM Automation</h2><span class="date">2026 - Present</span></div><div class="meta"><span>Python · FastAPI · PostgreSQL · Redis · Next.js · Celery</span><span class="meta-links"><a href="https://abhishek-project-demos1.vercel.app/revenueos.html" target="_blank" rel="noreferrer">Demo</a> / <a href="https://github.com/CyborPunk-2077/AI-RevenueOS" target="_blank" rel="noreferrer">GitHub</a></span></div><ul><li>Built a multi-tenant revenue platform spanning leads, opportunities, activities, communications, appointments, payments, automation, and analytics.</li><li>Enforced tenant isolation in both repository queries and PostgreSQL row-level security; provider integrations fail closed when configuration or credentials are absent.</li><li>Structured the backend around API, application, domain, and infrastructure boundaries with real-PostgreSQL integration tests and observable worker flows.</li></ul></div></article>
+<article class="project"><div class="no">02</div><div><div class="project-top"><h2>Viberant — Local AI Development Workspace</h2><span class="date">2026 - Present</span></div><div class="meta"><span>JavaScript · Node.js · Local-first · Git/GitHub · Tool launchers</span><span class="meta-links"><a href="https://abhishek-project-demos1.vercel.app/viberant.html" target="_blank" rel="noreferrer">Demo</a> / <a href="https://github.com/CyborPunk-2077/Viberant" target="_blank" rel="noreferrer">GitHub</a></span></div><ul><li>Built a zero-install local workspace that discovers projects and opens installed AI coding tools, terminals, and editors already scoped to the selected folder.</li><li>Designed account-profile switching and one-press GitHub save/push with explicit offline and failure states so local work is never falsely reported as uploaded.</li></ul></div></article>
+<article class="project"><div class="no">03</div><div><div class="project-top"><h2>ReceptionFlow — AI Voice Receptionist</h2><span class="date">2026 - Present</span></div><div class="meta"><span>Node.js · WebSockets · Exotel · Sarvam · OpenAI / Anthropic</span><span class="meta-links"><a href="https://abhishek-project-demos1.vercel.app/receptionflow.html" target="_blank" rel="noreferrer">Demo</a> / <a href="https://github.com/CyborPunk-2077/AI-VOICE-RECEPTIONIST" target="_blank" rel="noreferrer">GitHub</a></span></div><ul><li>Built a config-driven receptionist that answers from approved business knowledge, captures callbacks, routes or escalates calls, and supports Hindi-English code switching.</li><li>Engineered a provider-neutral real-time voice path with barge-in, adaptive VAD, mock-call simulation, diagnostics, and one-JSON onboarding for new businesses.</li></ul></div></article>
+<article class="project"><div class="no">04</div><div><div class="project-top"><h2>VisionExtract — Article Image Extraction Pipeline</h2><span class="date">2025 - Present</span></div><div class="meta"><span>Python · Trafilatura · Newspaper3k · BeautifulSoup · Streamlit</span><span class="meta-links"><a href="https://abhishek-project-demos1.vercel.app/visionextract.html" target="_blank" rel="noreferrer">Demo</a> / <a href="https://github.com/CyborPunk-2077/VisionExtract" target="_blank" rel="noreferrer">GitHub</a></span></div><ul><li>Rebuilt article-image extraction as a reusable pipeline with a Trafilatura → Newspaper3k → BeautifulSoup fallback chain, relevance scoring, and aggressive asset filtering.</li><li>Processed 10K+ articles at ~93% precision and added CLI quality controls, a Streamlit review UI, plus HTML/JSON run reports for downstream workflows.</li></ul></div></article>
+</div></section>
+<section class="section"><div class="label">Education / Activity</div><div class="dual"><div class="block"><strong>Ramaiah Institute of Technology, Bengaluru</strong><div class="minor">2022 - 2026</div><p>Bachelor of Engineering in Artificial Intelligence &amp; Machine Learning</p></div><div class="block"><strong>Reverse Engineering &amp; Windows Systems Research</strong><div class="minor">~3 years</div><p>Memory inspection, pointer/offset tracing, runtime debugging, process/module analysis, experimental overlay/telemetry tooling; technical support for ~70-100 users across setup, permissions, compatibility, and runtime troubleshooting.</p></div></div></section>
+<section class="section"><div class="label">Technical Skills</div><div><div class="skills-head"><span></span><span>STRUCTURED FOR FAST RECRUITER SCANNING</span></div><div class="skills"><b>LANGUAGES</b><span>Python · JavaScript · TypeScript · C++ · C</span><b>FRONTEND / APP</b><span>React · HTML · CSS · SCSS · Electron</span><b>AI / ML</b><span>LLM APIs · NumPy · Pandas · Scikit-learn · TensorFlow · OpenCV · Hugging Face</span><b>DATA / DEVOPS</b><span>MongoDB · SQL · AWS · Docker · Git · GitHub Actions · Vercel</span><b>BACKEND / APIS</b><span>Node.js · Express.js · Flask · REST · WebSockets</span><b>CS FUNDAMENTALS</b><span>DSA · DBMS · Operating Systems · Computer Networks</span></div></div></section>
+</main>
+</body>
+</html>
