@@ -6,62 +6,54 @@
 <meta name="theme-color" content="#090908">
 <title>Abhishek Tiwary — BLACKSITE</title>
 <style>
-html,body{margin:0;background:#090908;color:#ece9df;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}#boot{min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center;text-transform:uppercase;letter-spacing:.1em}#detail{display:block;color:#8c8a83;margin-top:12px;text-transform:none;letter-spacing:0;font-size:12px}
+html,body{margin:0;background:#090908;color:#ece9df;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+#boot{min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center;text-transform:uppercase;letter-spacing:.1em}
+#detail{display:block;color:#8c8a83;margin-top:12px;text-transform:none;letter-spacing:0;font-size:12px}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
 </head>
-<body><div id="boot"><div>Loading BLACKSITE…<span id="detail">loading verified core</span></div></div>
+<body><div id="boot"><div>Loading BLACKSITE…<span id="detail">starting verified Omega</span></div></div>
 <script>
 (async()=>{
  const boot=document.getElementById('boot'),detail=document.getElementById('detail');
+ const core=['core-00.txt','core-01.txt','core-02.txt','core-03.txt','core-04.txt','core-05.txt','core-06.txt','core-07.txt'];
+ const assets=['assets-00.txt','assets-01.txt','assets-02.txt','assets-03-00.txt','assets03r00.txt','assets03r01.txt','assets03r02.txt','assets03r03.txt','assets03r04.txt','assets-04.txt','assets-05.txt','assets-06.txt','assets-07.txt','assets-08.txt','assets-09.txt','assets-10.txt'];
+ async function unpack(files,label){
+   let b64='';
+   for(let i=0;i<files.length;i++){
+     detail.textContent=`loading ${label} ${i+1}/${files.length}`;
+     const r=await fetch(`v3/${files[i]}?omega=8`,{cache:'no-store'});
+     if(!r.ok) throw new Error(`${files[i]} HTTP ${r.status}`);
+     const part=(await r.text()).replace(/\s+/g,'');
+     if(!part || !/^[A-Za-z0-9+/]*={0,2}$/.test(part)) throw new Error(`${files[i]} payload invalid`);
+     b64+=part;
+   }
+   if(b64.length%4!==0) throw new Error(`${label} base64 length invalid`);
+   let bin;
+   try{bin=atob(b64)}catch(e){throw new Error(`${label} base64 decode failed`)}
+   const bytes=new Uint8Array(bin.length);
+   for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+   if(!('DecompressionStream' in window)) throw new Error('This browser does not support native gzip decompression. Use a current Chrome, Edge, Firefox or Safari.');
+   try{
+     return await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+   }catch(e){throw new Error(`${label} gzip decode failed`)}
+ }
  try{
-   const byteParts=[];
-   for(let i=0;i<8;i++){
-     const id=String(i).padStart(2,'0');
-     detail.textContent=`loading core ${i+1}/8`;
-     const r=await fetch(`v3/core-${id}.txt?v=6`,{cache:'no-store'});
-     if(!r.ok) throw new Error(`core-${id} HTTP ${r.status}`);
-     const s=(await r.text()).replace(/\s+/g,'');
-     if(!s || s.length%4!==0 || !/^[A-Za-z0-9+/]*={0,2}$/.test(s)) throw new Error(`core-${id} is not valid base64`);
-     let bin;
-     try{bin=atob(s)}catch(e){throw new Error(`core-${id} decode failed`)}
-     const u=new Uint8Array(bin.length);
-     for(let j=0;j<bin.length;j++)u[j]=bin.charCodeAt(j);
-     byteParts.push(u);
-   }
-   const total=byteParts.reduce((n,u)=>n+u.length,0), bytes=new Uint8Array(total);
-   let off=0; for(const u of byteParts){bytes.set(u,off);off+=u.length}
-   detail.textContent='starting runtime';
-   let html='';
-   if('DecompressionStream' in window){
-     try{html=await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text()}catch(e){}
-   }
-   if(!html){
-     if(!window.pako) throw new Error('gzip decoder unavailable');
-     html=window.pako.ungzip(bytes,{to:'string'});
-   }
-   if(!html.includes('Abhishek Tiwary — BLACKSITE')) throw new Error('verified BLACKSITE core is invalid');
-
-   // The original BLACKSITE UI/runtime is preserved. Only its old embedded binary-loader hooks are removed.
-   html=html.replace('<script src="assets-lite.js"></script>','').replace('<script src="resume-lite.js"></script>','');
-   html=html.replace(/<script>\s*\(\(\)=>\{\s*const A=window\.BLACKSITE_ASSETS[\s\S]*?\}\)\(\);\s*<\/script>/,'');
-   html=html.replaceAll('assets/Abhishek_Tiwary_Resume.pdf','resume.html');
-
-   const labels={
-    'revenueos.webp':'REVENUEOS','viberant.webp':'VIBERANT','receptionflow.webp':'RECEPTIONFLOW','visionextract.webp':'VISIONEXTRACT',
-    'revenueos_alt.webp':'REVENUEOS','revenueos_alt2.webp':'REVENUEOS','erp.webp':'ERP / SMARTSTOCK','visionance.webp':'VISIONANCE','forgeos.webp':'FORGEOS'
-   };
-   const card=(label)=>{
-     const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#151512"/><stop offset="1" stop-color="#080807"/></linearGradient><pattern id="p" width="52" height="52" patternUnits="userSpaceOnUse"><path d="M52 0H0V52" fill="none" stroke="#ece9df" stroke-opacity=".055"/></pattern></defs><rect width="1280" height="720" fill="url(#g)"/><rect width="1280" height="720" fill="url(#p)"/><path d="M70 92H1210M70 628H1210" stroke="#ff4b20" stroke-opacity=".5"/><text x="76" y="355" fill="#ece9df" font-family="monospace" font-size="58" font-weight="700">${label}</text><text x="76" y="410" fill="#8c8a83" font-family="monospace" font-size="22">ABHISHEK TIWARY / ENGINEERING SYSTEM</text></svg>`;
-     return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
-   };
-   for(const [file,label] of Object.entries(labels)) html=html.replaceAll(`assets/${file}`,card(label));
-
-   document.open(); document.write(html); document.close();
+   const [coreHtml,assetJs]=await Promise.all([unpack(core,'Omega core'),unpack(assets,'Omega images')]);
+   if(!coreHtml.includes('Abhishek Tiwary — BLACKSITE')) throw new Error('Omega core verification failed');
+   if(!assetJs.includes('window.BLACKSITE_ASSETS')) throw new Error('Omega image verification failed');
+   detail.textContent='launching BLACKSITE';
+   let html=coreHtml
+     .replace('<script src="assets-lite.js"></script>','<script>'+assetJs+'<\\/script>')
+     .replace('<script src="resume-lite.js"></script>','')
+     .replaceAll('assets/Abhishek_Tiwary_Resume.pdf','resume.html');
+   document.open();
+   document.write(html);
+   document.close();
  }catch(e){
    console.error(e);
    boot.innerHTML='<div>BLACKSITE LOAD ERROR<span id="detail">'+String(e&&e.message||e)+'</span></div>';
  }
 })();
 </script>
-</body></html>
+</body>
+</html>
