@@ -18,7 +18,7 @@ html,body{margin:0;background:#05070a;color:#e7f3f1;font-family:ui-monospace,mon
    const names=['00','01','02','03','04','05','06'];
    const parts=[];
    for(const n of names){
-     const r=await fetch(`payload/site-${n}.txt?v=3`,{cache:'no-store'});
+     const r=await fetch(`payload/site-${n}.txt?v=4`,{cache:'no-store'});
      if(!r.ok) throw new Error(`payload ${n} HTTP ${r.status}`);
      parts.push((await r.text()).trim());
    }
@@ -40,6 +40,10 @@ html,body{margin:0;background:#05070a;color:#e7f3f1;font-family:ui-monospace,mon
      html=window.pako.ungzip(bytes,{to:'string'});
    }
    if(!html || !/<html[\s>]/i.test(html)) throw new Error('decoded portfolio HTML is invalid');
+
+   // Force every resume CTA in the uploaded BLACKSITE build to the current resume endpoint.
+   html=html.replaceAll('assets/Abhishek_Tiwary_Resume.pdf','resume.html');
+
    document.open();
    document.write(html);
    document.close();
