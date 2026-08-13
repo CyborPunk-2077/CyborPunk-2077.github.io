@@ -1,0 +1,4 @@
+BLACKSITE Omega exact payload manifest
+core: 00-07
+assets: 00-02, segmented 03, 04-10
+resume: website endpoint
