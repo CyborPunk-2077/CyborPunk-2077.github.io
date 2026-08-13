@@ -6,32 +6,46 @@
 <title>Abhishek Tiwary — BLACKSITE</title>
 <style>
 html,body{margin:0;background:#05070a;color:#e7f3f1;font-family:ui-monospace,monospace}
-#boot{min-height:100vh;display:grid;place-items:center;letter-spacing:.12em;text-transform:uppercase}
+#boot{min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center;letter-spacing:.08em;text-transform:uppercase;white-space:pre-wrap}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
 </head>
 <body><div id="boot">Loading BLACKSITE…</div>
 <script>
 (async()=>{
+ const boot=document.getElementById('boot');
  try{
    const names=['00','01','02','03','04','05','06'];
    const parts=[];
    for(const n of names){
-     const r=await fetch(`payload/site-${n}.txt`,{cache:'no-store'});
-     if(!r.ok) throw new Error(`payload ${n}: ${r.status}`);
+     const r=await fetch(`payload/site-${n}.txt?v=3`,{cache:'no-store'});
+     if(!r.ok) throw new Error(`payload ${n} HTTP ${r.status}`);
      parts.push((await r.text()).trim());
    }
    const b64=parts.join('');
    const bin=atob(b64);
    const bytes=new Uint8Array(bin.length);
    for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-   const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-   const html=await new Response(stream).text();
+
+   let html='';
+   let nativeError='';
+   if('DecompressionStream' in window){
+     try{
+       const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+       html=await new Response(stream).text();
+     }catch(e){ nativeError=String(e && e.message || e); }
+   }
+   if(!html){
+     if(!window.pako) throw new Error(`gzip fallback library unavailable${nativeError ? ' | native: '+nativeError : ''}`);
+     html=window.pako.ungzip(bytes,{to:'string'});
+   }
+   if(!html || !/<html[\s>]/i.test(html)) throw new Error('decoded portfolio HTML is invalid');
    document.open();
    document.write(html);
    document.close();
  }catch(e){
-   document.getElementById('boot').textContent='BLACKSITE failed to load — refresh';
    console.error(e);
+   boot.textContent='BLACKSITE FAILED TO LOAD\n\n'+String(e && e.message || e)+'\n\nTry a hard refresh. If this remains, send me this exact error text.';
  }
 })();
 </script>
