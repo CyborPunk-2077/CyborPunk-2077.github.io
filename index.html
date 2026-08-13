@@ -2,54 +2,65 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090908">
 <title>Abhishek Tiwary — BLACKSITE</title>
 <style>
-html,body{margin:0;background:#05070a;color:#e7f3f1;font-family:ui-monospace,monospace}
-#boot{min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center;letter-spacing:.08em;text-transform:uppercase;white-space:pre-wrap}
+html,body{margin:0;background:#090908;color:#ece9df;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}#boot{min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center;text-transform:uppercase;letter-spacing:.1em}#detail{display:block;color:#8c8a83;margin-top:12px;text-transform:none;letter-spacing:0;font-size:12px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
 </head>
-<body><div id="boot">Loading BLACKSITE…</div>
+<body><div id="boot"><div>Loading BLACKSITE…<span id="detail">loading verified core</span></div></div>
 <script>
 (async()=>{
- const boot=document.getElementById('boot');
+ const boot=document.getElementById('boot'),detail=document.getElementById('detail');
  try{
-   const names=['00','01','02','03','04','05','06'];
-   const parts=[];
-   for(const n of names){
-     const r=await fetch(`payload/site-${n}.txt?v=4`,{cache:'no-store'});
-     if(!r.ok) throw new Error(`payload ${n} HTTP ${r.status}`);
-     parts.push((await r.text()).trim());
+   const byteParts=[];
+   for(let i=0;i<8;i++){
+     const id=String(i).padStart(2,'0');
+     detail.textContent=`loading core ${i+1}/8`;
+     const r=await fetch(`v3/core-${id}.txt?v=6`,{cache:'no-store'});
+     if(!r.ok) throw new Error(`core-${id} HTTP ${r.status}`);
+     const s=(await r.text()).replace(/\s+/g,'');
+     if(!s || s.length%4!==0 || !/^[A-Za-z0-9+/]*={0,2}$/.test(s)) throw new Error(`core-${id} is not valid base64`);
+     let bin;
+     try{bin=atob(s)}catch(e){throw new Error(`core-${id} decode failed`)}
+     const u=new Uint8Array(bin.length);
+     for(let j=0;j<bin.length;j++)u[j]=bin.charCodeAt(j);
+     byteParts.push(u);
    }
-   const b64=parts.join('');
-   const bin=atob(b64);
-   const bytes=new Uint8Array(bin.length);
-   for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-
+   const total=byteParts.reduce((n,u)=>n+u.length,0), bytes=new Uint8Array(total);
+   let off=0; for(const u of byteParts){bytes.set(u,off);off+=u.length}
+   detail.textContent='starting runtime';
    let html='';
-   let nativeError='';
    if('DecompressionStream' in window){
-     try{
-       const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-       html=await new Response(stream).text();
-     }catch(e){ nativeError=String(e && e.message || e); }
+     try{html=await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text()}catch(e){}
    }
    if(!html){
-     if(!window.pako) throw new Error(`gzip fallback library unavailable${nativeError ? ' | native: '+nativeError : ''}`);
+     if(!window.pako) throw new Error('gzip decoder unavailable');
      html=window.pako.ungzip(bytes,{to:'string'});
    }
-   if(!html || !/<html[\s>]/i.test(html)) throw new Error('decoded portfolio HTML is invalid');
+   if(!html.includes('Abhishek Tiwary — BLACKSITE')) throw new Error('verified BLACKSITE core is invalid');
 
-   // Force every resume CTA in the uploaded BLACKSITE build to the current resume endpoint.
+   // The original BLACKSITE UI/runtime is preserved. Only its old embedded binary-loader hooks are removed.
+   html=html.replace('<script src="assets-lite.js"></script>','').replace('<script src="resume-lite.js"></script>','');
+   html=html.replace(/<script>\s*\(\(\)=>\{\s*const A=window\.BLACKSITE_ASSETS[\s\S]*?\}\)\(\);\s*<\/script>/,'');
    html=html.replaceAll('assets/Abhishek_Tiwary_Resume.pdf','resume.html');
 
-   document.open();
-   document.write(html);
-   document.close();
+   const labels={
+    'revenueos.webp':'REVENUEOS','viberant.webp':'VIBERANT','receptionflow.webp':'RECEPTIONFLOW','visionextract.webp':'VISIONEXTRACT',
+    'revenueos_alt.webp':'REVENUEOS','revenueos_alt2.webp':'REVENUEOS','erp.webp':'ERP / SMARTSTOCK','visionance.webp':'VISIONANCE','forgeos.webp':'FORGEOS'
+   };
+   const card=(label)=>{
+     const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#151512"/><stop offset="1" stop-color="#080807"/></linearGradient><pattern id="p" width="52" height="52" patternUnits="userSpaceOnUse"><path d="M52 0H0V52" fill="none" stroke="#ece9df" stroke-opacity=".055"/></pattern></defs><rect width="1280" height="720" fill="url(#g)"/><rect width="1280" height="720" fill="url(#p)"/><path d="M70 92H1210M70 628H1210" stroke="#ff4b20" stroke-opacity=".5"/><text x="76" y="355" fill="#ece9df" font-family="monospace" font-size="58" font-weight="700">${label}</text><text x="76" y="410" fill="#8c8a83" font-family="monospace" font-size="22">ABHISHEK TIWARY / ENGINEERING SYSTEM</text></svg>`;
+     return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+   };
+   for(const [file,label] of Object.entries(labels)) html=html.replaceAll(`assets/${file}`,card(label));
+
+   document.open(); document.write(html); document.close();
  }catch(e){
    console.error(e);
-   boot.textContent='BLACKSITE FAILED TO LOAD\n\n'+String(e && e.message || e)+'\n\nTry a hard refresh. If this remains, send me this exact error text.';
+   boot.innerHTML='<div>BLACKSITE LOAD ERROR<span id="detail">'+String(e&&e.message||e)+'</span></div>';
  }
 })();
 </script>
