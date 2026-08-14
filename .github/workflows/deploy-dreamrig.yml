@@ -33,6 +33,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Canonical production portfolio URL. This changes only the link target,
+          # not the scene, materials, geometry, textures, shaders, or quality settings.
+          sed -i 's|https://abhishek-tiwary-portfolio.vercel.app/|https://cyborpunk-2077.github.io/|g' app/lib/portfolio-data.ts
           npm install --no-audit --no-fund
           npm run build
           touch dist/.nojekyll
