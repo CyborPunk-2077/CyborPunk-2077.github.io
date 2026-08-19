@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#050608" />
     <meta name="description" content="Explore Abhishek Tiwary's work through DREAMRIG, a cinematic interactive workstation portfolio for applied AI, automation, developer tooling, and systems engineering." />
     <meta name="application-name" content="DREAMRIG" />
@@ -18,12 +18,49 @@
     <meta name="twitter:image" content="https://abhishek-project-demos1.vercel.app/posters/revenueos.jpg" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2218%22 fill=%22%23050608%22/><text x=%2250%22 y=%2262%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%23d7ff7a%22 font-family=%22Arial%22>DR</text></svg>" />
     <title>DREAMRIG — Abhishek Tiwary</title>
-    <script type="module" crossorigin src="/assets/index-zgYqvulk.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-jpDsebLB.js">
-    <link rel="modulepreload" crossorigin href="/assets/react-B0ZntvhZ.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-BOg78iPr.css">
+    <style>
+      html,body{margin:0;min-height:100%;background:#050608;color:#f4f7f8;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{min-height:100svh}.dreamrig-boot{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 38%,#142017 0,#080b0d 35%,#050608 72%);z-index:0}.dreamrig-boot__box{width:min(360px,calc(100vw - 42px));border:1px solid #ffffff17;border-radius:18px;background:#0a0d11cc;box-shadow:0 24px 90px #000c;padding:22px}.dreamrig-boot__top{display:flex;justify-content:space-between;align-items:center;font-size:9px;font-weight:800;letter-spacing:.15em;color:#a9b3ba}.dreamrig-boot__dot{width:8px;height:8px;border-radius:50%;background:#d7ff7a;box-shadow:0 0 15px #d7ff7a}.dreamrig-boot h1{margin:26px 0 8px;font-size:34px;letter-spacing:-.06em}.dreamrig-boot p{margin:0;color:#89959e;font-size:11px;line-height:1.5}.dreamrig-boot__track{height:2px;margin-top:21px;background:#ffffff12;overflow:hidden;border-radius:4px}.dreamrig-boot__track:after{content:"";display:block;height:100%;width:42%;background:#d7ff7a;animation:dr-load 1.1s ease-in-out infinite alternate}@keyframes dr-load{to{transform:translateX(140%)}}@media(prefers-reduced-motion:reduce){.dreamrig-boot__track:after{animation:none;width:70%}}
+    </style>
+    <script>
+      (function () {
+        var params = new URLSearchParams(location.search);
+        var forceFull = params.get('full') === '1';
+        var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        var compact = Math.min(window.innerWidth || 9999, screen.width || 9999) <= 980;
+        if (!forceFull && compact && (coarse || Math.min(window.innerWidth || 9999, screen.width || 9999) <= 760)) {
+          location.replace('/mobile.html' + (location.hash || ''));
+          return;
+        }
+        function addLink(rel, href) {
+          var link = document.createElement('link');
+          link.rel = rel;
+          link.href = href;
+          link.crossOrigin = 'anonymous';
+          document.head.appendChild(link);
+        }
+        addLink('stylesheet', '/assets/index-BOg78iPr.css');
+        addLink('modulepreload', '/assets/rolldown-runtime-jpDsebLB.js');
+        addLink('modulepreload', '/assets/react-B0ZntvhZ.js');
+        window.addEventListener('DOMContentLoaded', function () {
+          var script = document.createElement('script');
+          script.type = 'module';
+          script.crossOrigin = 'anonymous';
+          script.src = '/assets/index-zgYqvulk.js';
+          document.head.appendChild(script);
+        }, { once: true });
+      })();
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="dreamrig-boot" role="status" aria-live="polite">
+        <div class="dreamrig-boot__box">
+          <div class="dreamrig-boot__top"><span>DREAMRIG / WORKSTATION</span><i class="dreamrig-boot__dot"></i></div>
+          <h1>Bringing the rig online.</h1>
+          <p>The interface paints first; the cinematic workspace follows.</p>
+          <div class="dreamrig-boot__track"></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
