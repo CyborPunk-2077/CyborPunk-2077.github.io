@@ -1,0 +1,36 @@
+name: Validate DREAMRIG repair
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repair source
+        uses: actions/checkout@v4
+
+      - name: Expand repaired source
+        run: tar -xzf source.tar.gz
+
+      - name: Enable pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install clean dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck and production build
+        run: pnpm build
