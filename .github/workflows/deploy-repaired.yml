@@ -1,0 +1,76 @@
+name: Deploy repaired DREAMRIG
+
+on:
+  push:
+    branches: [dreamrig-source]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dreamrig-production
+  cancel-in-progress: true
+
+jobs:
+  unpack-build-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore repaired source
+        run: |
+          mkdir -p /tmp/dreamrig-source
+          cat .dreamrig-payload/source.part.* | base64 -d > /tmp/dreamrig-source.tar.xz
+          echo "86e6b9568b81e3af9fe492f436429271c3e1d8febe56aeef0ff0595bc35c5447  /tmp/dreamrig-source.tar.xz" | sha256sum -c -
+          tar -xJf /tmp/dreamrig-source.tar.xz -C /tmp/dreamrig-source
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Clean install, typecheck and build
+        working-directory: /tmp/dreamrig-source
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Prepare Pages output
+        working-directory: /tmp/dreamrig-source
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
+      - name: Publish verified site to main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: /tmp/dreamrig-source/dist
+        run: |
+          git init
+          git checkout -b deploy
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy repaired DREAMRIG portfolio"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force origin deploy:main
+
+      - name: Replace packed staging branch with readable source
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: /tmp/dreamrig-source
+        run: |
+          git init
+          git checkout -b dreamrig-source
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish repaired DREAMRIG source"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force origin dreamrig-source
