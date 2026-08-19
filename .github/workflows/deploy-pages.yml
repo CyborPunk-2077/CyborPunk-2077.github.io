@@ -1,0 +1,60 @@
+name: Build and publish DREAMRIG
+
+on:
+  push:
+    branches: [dreamrig-source]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dreamrig-production
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source package
+        uses: actions/checkout@v4
+
+      - name: Expand repaired source
+        run: tar -xzf source.tar.gz
+
+      - name: Enable pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install clean dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck and production build
+        run: pnpm build
+
+      - name: Prepare GitHub Pages output
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
+      - name: Publish verified dist to main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd dist
+          git init
+          git checkout -b deploy
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy DREAMRIG portfolio"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force origin deploy:main
