@@ -7,3 +7,4 @@ This branch is the safe source/build lane for the repaired DREAMRIG site. `main`
 A pre-repair live backup is preserved on `dreamrig-live-backup-20260819`.
 
 Deployment trigger: repaired mobile/performance production pass.
+Validation trigger: clean Ubuntu PR build.
